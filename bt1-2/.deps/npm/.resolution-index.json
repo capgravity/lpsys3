@@ -1,0 +1,10 @@
+{
+  "bank.sol": {
+    "__sources__": {
+      "bank.sol": {
+        "content": "//SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\ncontract BankAccount{\n    mapping(address customer => uint256 balance) private balances;\n    event Withdrawn(address indexed customer, uint balance);\n    event Deposited(address indexed customer, uint balance);\n\n    function deposit() public payable{\n        require(msg.value>0, \"Value to deposited needs to be greater than 0\");\n        balances[msg.sender]+=msg.value;\n        emit Deposited(msg.sender, msg.value);\n    }\n\n    function withdraw(uint amount)public {\n        require(amount>0, \"Value to be withdrawn should be greater than 0\");\n        require(amount<=balances[msg.sender], \"Value to be withdrawn is greater than value in bank\");\n        balances[msg.sender]-= amount;\n        (bool success, )=payable(msg.sender).call{value: amount}(\"\");\n        require(success, \"TX failed\");\n        emit Withdrawn(msg.sender, amount);\n    }\n\n    function getBalance() public view returns(uint){\n        return balances[msg.sender];\n    }\n}\n",
+        "file": "bank.sol"
+      }
+    }
+  }
+}

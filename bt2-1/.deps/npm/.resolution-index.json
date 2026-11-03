@@ -1,0 +1,10 @@
+{
+  "students.sol": {
+    "__sources__": {
+      "students.sol": {
+        "content": "//SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract StudentData{\n    struct Student{\n        uint id;\n        string name;\n        string course;\n        uint marks;\n        uint roll;\n    }\n    Student[] public students;\n    \n    event StudentAdded(uint id, string name, string course, uint marks, uint roll);\n    function addStudent(string memory name, string memory course, uint marks, uint roll) public{\n        uint newID= students.length+1;\n        students.push(Student(newID, name, course, marks, roll));\n        emit StudentAdded(newID, name, course, marks, roll);\n    }\n    function getStudent(uint index)public view returns(uint id, string memory name, string memory course, uint marks, uint roll){\n        require(index<students.length, \"Index out of bounds\");\n        Student memory s= students[index];\n        return (s.id, s.name, s.course, s.marks, s.roll);\n    }\n    function getAllStudents()public view returns(Student[] memory){\n        return students;\n    }\n    function getNumberOfStudents() public view returns(uint n){\n        return students.length;\n    }\n    function getEth() public view returns(uint eth){\n        return address(this).balance;\n    }\n\n}",
+        "file": "students.sol"
+      }
+    }
+  }
+}
